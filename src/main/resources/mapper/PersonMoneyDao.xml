@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.financial_system.financial_system.person_money.dao.PersonMoneyDao">
+  <resultMap id="BaseResultMap" type="com.financial_system.financial_system.person_money.entity.PersonMoney">
+    <id column="userid" jdbcType="VARCHAR" property="userid" />
+    <result column="money" jdbcType="DOUBLE" property="money" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    userid, money
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from person_money
+    where userid = #{userid,jdbcType=VARCHAR}
+  </select>
+  <select id="queryAll" parameterType="com.financial_system.financial_system.person_money.entity.PersonMoney" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from person_money
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from person_money
+    where userid = #{userid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" keyColumn="userid" keyProperty="userid" parameterType="com.financial_system.financial_system.person_money.entity.PersonMoney" useGeneratedKeys="true">
+    insert into person_money (money)
+    values (#{money,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" keyColumn="userid" keyProperty="userid" parameterType="com.financial_system.financial_system.person_money.entity.PersonMoney" useGeneratedKeys="true">
+    insert into person_money
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="money != null">
+        money,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="money != null">
+        #{money,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.financial_system.financial_system.person_money.entity.PersonMoney">
+    update person_money
+    <set>
+      <if test="money != null">
+        money = #{money,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where userid = #{userid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.financial_system.financial_system.person_money.entity.PersonMoney">
+    update person_money
+    set money = #{money,jdbcType=DOUBLE}
+    where userid = #{userid,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.financial_system.financial_system.investment.dao.InvestmentDao">
+  <resultMap id="BaseResultMap" type="com.financial_system.financial_system.investment.entity.Investment">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="day_money" jdbcType="DOUBLE" property="dayMoney" />
+    <result column="day_money_ratio" jdbcType="DOUBLE" property="dayMoneyRatio" />
+    <result column="investment_money" jdbcType="DOUBLE" property="investmentMoney" />
+    <result column="happen_time" jdbcType="TIMESTAMP" property="happenTime" />
+    <result column="userid" jdbcType="VARCHAR" property="userid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, `type`, `name`, day_money, day_money_ratio, investment_money, userid, happen_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from investment
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="queryAll" parameterType="com.financial_system.financial_system.investment.vo.InvestmentVo" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from investment
+    where 1=1
+    <if test="type != null and type != '' ">
+      and `type` = #{type,jdbcType=VARCHAR}
+    </if>
+    <if test="userid != null and userid != '' ">
+      and `userid` = #{userid,jdbcType=VARCHAR}
+    </if>
+    <if test="name != null and name != '' ">
+      and `name` = #{name,jdbcType=VARCHAR}
+    </if>
+    <if test="investmentMoney  != null">
+      and investment_money = #{investmentMoney,jdbcType=DOUBLE}
+    </if>
+    <if test="dayMoney  != null">
+      and day_money  = #{dayMoney,jdbcType=DOUBLE}
+    </if>
+    <if test="happenTimesStart != null and happenTimesStart != '' ">
+      and happen_time &gt;= #{happenTimesStart,jdbcType=TIMESTAMP}
+    </if>
+    <if test="happenTimesEnd != null and happenTimesEnd != '' ">
+      and happen_time &lt;= #{happenTimesEnd,jdbcType=TIMESTAMP}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from investment
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert"  parameterType="com.financial_system.financial_system.investment.entity.Investment" >
+    insert into investment ( id,`type`, `name`, day_money,
+      day_money_ratio, investment_money, userid,happen_time
+      )
+    values (#{id,jdbcType=VARCHAR},#{type,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{dayMoney,jdbcType=DOUBLE},
+      #{dayMoneyRatio,jdbcType=DOUBLE}, #{investmentMoney,jdbcType=DOUBLE}, #{userid,jdbcType=VARCHAR}, #{happenTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.financial_system.financial_system.investment.entity.Investment" useGeneratedKeys="true">
+    insert into investment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="dayMoney != null">
+        day_money,
+      </if>
+      <if test="dayMoneyRatio != null">
+        day_money_ratio,
+      </if>
+      <if test="investmentMoney != null">
+        investment_money,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="dayMoney != null">
+        #{dayMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="dayMoneyRatio != null">
+        #{dayMoneyRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="investmentMoney != null">
+        #{investmentMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.financial_system.financial_system.investment.entity.Investment">
+    update investment
+    <set>
+      <if test="type != null">
+        `type` = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="dayMoney != null">
+        day_money = #{dayMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="dayMoneyRatio != null">
+        day_money_ratio = #{dayMoneyRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="investmentMoney != null">
+        investment_money = #{investmentMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.financial_system.financial_system.investment.entity.Investment">
+    update investment
+    set `type` = #{type,jdbcType=VARCHAR},
+      `name` = #{name,jdbcType=VARCHAR},
+      day_money = #{dayMoney,jdbcType=DOUBLE},
+      day_money_ratio = #{dayMoneyRatio,jdbcType=DOUBLE},
+      investment_money = #{investmentMoney,jdbcType=DOUBLE},
+      happen_time = #{happenTime,jdbcType=TIMESTAMP},
+      userid = #{userid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

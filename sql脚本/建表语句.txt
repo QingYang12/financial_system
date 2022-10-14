@@ -1,0 +1,89 @@
+
+CREATE TABLE `consumption` (
+  `id` varchar(255) NOT NULL,
+  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '类别',
+  `money` double DEFAULT NULL COMMENT '消费金额',
+  `userid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '账户ID',
+  `happen_time` datetime DEFAULT NULL COMMENT '发生时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='消费表';
+
+CREATE TABLE `debt` (
+  `id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '类别',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '公司名称',
+  `money` double DEFAULT NULL COMMENT '债务金额',
+  `happen_time` datetime DEFAULT NULL COMMENT '发生日期',
+  `repayment_time` datetime DEFAULT NULL COMMENT '还款日期',
+  `repayment_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '还款类别',
+  `repayment_day_num` int DEFAULT NULL COMMENT '还款时长',
+  `current_pay_money` double DEFAULT NULL COMMENT '本期应还款金额',
+  `userid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '账户ID',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='债务表';
+
+CREATE TABLE `income` (
+  `id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '收入类别',
+  `money` double DEFAULT NULL COMMENT '金额',
+  `happen_time` datetime DEFAULT NULL COMMENT '发生时间',
+  `userid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '账户ID',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='收入表';
+
+CREATE TABLE `investment` (
+  `id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '类别',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '公司名称',
+  `day_money` double DEFAULT NULL COMMENT '单日变化',
+  `day_money_ratio` double DEFAULT NULL COMMENT '单日占比',
+  `investment_money` double DEFAULT NULL COMMENT '投入本金余额',
+  `userid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '账户ID',
+  `happen_time` datetime DEFAULT NULL COMMENT '发生时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='理财表';
+CREATE TABLE `person_money` (
+  `userid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '账户ID',
+  `money` double DEFAULT NULL COMMENT '余额',
+  PRIMARY KEY (`userid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='个人余额资产表\n';
+
+CREATE TABLE `upload` (
+  `id` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '主键',
+  `type` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '文件类型',
+  `name` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '字段名',
+  `file_src` longtext COLLATE utf8_bin COMMENT '文件',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `create_user` varchar(64) COLLATE utf8_bin DEFAULT NULL COMMENT '创建人编号',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `update_user` varchar(64) COLLATE utf8_bin DEFAULT NULL COMMENT '更新人编号',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='文件表';
+
+
+
+CREATE TABLE `user` (
+  `id` varchar(64) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `username` varchar(64) COLLATE utf8_bin DEFAULT NULL COMMENT '账号',
+  `password` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '密码',
+  `telephone` varchar(64) COLLATE utf8_bin DEFAULT NULL COMMENT '电话号',
+  `old` varchar(64) COLLATE utf8_bin DEFAULT NULL COMMENT '年龄',
+  `role` varchar(64) COLLATE utf8_bin DEFAULT NULL COMMENT '角色 权限',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `create_user` varchar(64) COLLATE utf8_bin DEFAULT NULL COMMENT '创建人编号',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `update_user` varchar(64) COLLATE utf8_bin DEFAULT NULL COMMENT '更新人编号',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='员工管理员表';
+
+
+
+
+
+
+
+
+
+
+
+

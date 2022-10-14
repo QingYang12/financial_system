@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.financial_system.financial_system.consumption.dao.ConsumptionDao">
+  <resultMap id="BaseResultMap" type="com.financial_system.financial_system.consumption.entity.Consumption">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="money" jdbcType="DOUBLE" property="money" />
+    <result column="userid" jdbcType="VARCHAR" property="userid" />
+    <result column="happen_time" jdbcType="TIMESTAMP" property="happenTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, `type`, money, userid, happen_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from consumption
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="queryAll" parameterType="com.financial_system.financial_system.consumption.vo.ConsumptionVo" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from consumption
+    where 1=1
+      <if test="type != null and type != '' ">
+        and `type` = #{type,jdbcType=VARCHAR}
+      </if>
+      <if test="userid != null and userid != '' ">
+        and `userid` = #{userid,jdbcType=VARCHAR}
+      </if>
+      <if test="money != null">
+        and money = #{money,jdbcType=DOUBLE}
+      </if>
+      <if test="happenTimesStart != null and happenTimesStart != '' ">
+        and happen_time &gt;= #{happenTimesStart,jdbcType=TIMESTAMP}
+      </if>
+      <if test="happenTimesEnd != null and happenTimesEnd != '' ">
+        and happen_time &lt;= #{happenTimesEnd,jdbcType=TIMESTAMP}
+      </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from consumption
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert"  parameterType="com.financial_system.financial_system.consumption.entity.Consumption" >
+    insert into consumption (id, `type`, money, userid,
+      happen_time)
+    values (#{id,jdbcType=VARCHAR},#{type,jdbcType=VARCHAR}, #{money,jdbcType=DOUBLE}, #{userid,jdbcType=VARCHAR},
+      #{happenTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.financial_system.financial_system.consumption.entity.Consumption" useGeneratedKeys="true">
+    insert into consumption
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="money != null">
+        money,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="happenTime != null">
+        happen_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        #{money,jdbcType=DOUBLE},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="happenTime != null">
+        #{happenTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.financial_system.financial_system.consumption.entity.Consumption">
+    update consumption
+    <set>
+      <if test="type != null">
+        `type` = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        money = #{money,jdbcType=DOUBLE},
+      </if>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="happenTime != null">
+        happen_time = #{happenTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.financial_system.financial_system.consumption.entity.Consumption">
+    update consumption
+    set `type` = #{type,jdbcType=VARCHAR},
+      money = #{money,jdbcType=DOUBLE},
+      userid = #{userid,jdbcType=VARCHAR},
+      happen_time = #{happenTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

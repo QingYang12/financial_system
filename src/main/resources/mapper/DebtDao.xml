@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.financial_system.financial_system.debt.dao.DebtDao">
+  <resultMap id="BaseResultMap" type="com.financial_system.financial_system.debt.entity.Debt">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="money" jdbcType="DOUBLE" property="money" />
+    <result column="happen_time" jdbcType="TIMESTAMP" property="happenTime" />
+    <result column="repayment_time" jdbcType="TIMESTAMP" property="repaymentTime" />
+    <result column="repayment_type" jdbcType="VARCHAR" property="repaymentType" />
+    <result column="repayment_day_num" jdbcType="INTEGER" property="repaymentDayNum" />
+    <result column="current_pay_money" jdbcType="DOUBLE" property="currentPayMoney" />
+    <result column="userid" jdbcType="VARCHAR" property="userid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, `type`, `name`, money, happen_time, repayment_time, repayment_type, repayment_day_num, 
+    current_pay_money, userid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from debt
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="queryAll" parameterType="com.financial_system.financial_system.debt.vo.DebtVo" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from debt
+    where 1=1
+    <if test="type != null and type != '' ">
+      and `type` = #{type,jdbcType=VARCHAR}
+    </if>
+    <if test="userid != null and userid != '' ">
+      and `userid` = #{userid,jdbcType=VARCHAR}
+    </if>
+    <if test="name != null and name != '' ">
+      and `name` = #{name,jdbcType=VARCHAR}
+    </if>
+    <if test="money != null">
+      and money = #{money,jdbcType=DOUBLE}
+    </if>
+    <if test="currentPayMoney != null">
+      and current_pay_money = #{currentPayMoney,jdbcType=DOUBLE}
+    </if>
+    <if test="happenTimesStart != null and happenTimesStart != '' ">
+      and happen_time &gt;= #{happenTimesStart,jdbcType=TIMESTAMP}
+    </if>
+    <if test="happenTimesEnd != null and happenTimesEnd != '' ">
+      and happen_time &lt;= #{happenTimesEnd,jdbcType=TIMESTAMP}
+    </if>
+    <if test="repaymentTimesStart != null and repaymentTimesStart != '' ">
+      and repayment_time &gt;= #{repaymentTimesStart,jdbcType=TIMESTAMP}
+    </if>
+    <if test="repaymentTimesEnd != null and repaymentTimesEnd != '' ">
+      and repayment_time &lt;= #{repaymentTimesEnd,jdbcType=TIMESTAMP}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from debt
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert"  parameterType="com.financial_system.financial_system.debt.entity.Debt" >
+    insert into debt ( id,`type`, `name`, money,
+      happen_time, repayment_time, repayment_type, 
+      repayment_day_num, current_pay_money, userid
+      )
+    values (#{id,jdbcType=VARCHAR},#{type,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{money,jdbcType=DOUBLE},
+      #{happenTime,jdbcType=TIMESTAMP}, #{repaymentTime,jdbcType=TIMESTAMP}, #{repaymentType,jdbcType=VARCHAR}, 
+      #{repaymentDayNum,jdbcType=INTEGER}, #{currentPayMoney,jdbcType=DOUBLE}, #{userid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.financial_system.financial_system.debt.entity.Debt" useGeneratedKeys="true">
+    insert into debt
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="money != null">
+        money,
+      </if>
+      <if test="happenTime != null">
+        happen_time,
+      </if>
+      <if test="repaymentTime != null">
+        repayment_time,
+      </if>
+      <if test="repaymentType != null">
+        repayment_type,
+      </if>
+      <if test="repaymentDayNum != null">
+        repayment_day_num,
+      </if>
+      <if test="currentPayMoney != null">
+        current_pay_money,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        #{money,jdbcType=DOUBLE},
+      </if>
+      <if test="happenTime != null">
+        #{happenTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="repaymentTime != null">
+        #{repaymentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="repaymentType != null">
+        #{repaymentType,jdbcType=VARCHAR},
+      </if>
+      <if test="repaymentDayNum != null">
+        #{repaymentDayNum,jdbcType=INTEGER},
+      </if>
+      <if test="currentPayMoney != null">
+        #{currentPayMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.financial_system.financial_system.debt.entity.Debt">
+    update debt
+    <set>
+      <if test="type != null">
+        `type` = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        money = #{money,jdbcType=DOUBLE},
+      </if>
+      <if test="happenTime != null">
+        happen_time = #{happenTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="repaymentTime != null">
+        repayment_time = #{repaymentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="repaymentType != null">
+        repayment_type = #{repaymentType,jdbcType=VARCHAR},
+      </if>
+      <if test="repaymentDayNum != null">
+        repayment_day_num = #{repaymentDayNum,jdbcType=INTEGER},
+      </if>
+      <if test="currentPayMoney != null">
+        current_pay_money = #{currentPayMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.financial_system.financial_system.debt.entity.Debt">
+    update debt
+    set `type` = #{type,jdbcType=VARCHAR},
+      `name` = #{name,jdbcType=VARCHAR},
+      money = #{money,jdbcType=DOUBLE},
+      happen_time = #{happenTime,jdbcType=TIMESTAMP},
+      repayment_time = #{repaymentTime,jdbcType=TIMESTAMP},
+      repayment_type = #{repaymentType,jdbcType=VARCHAR},
+      repayment_day_num = #{repaymentDayNum,jdbcType=INTEGER},
+      current_pay_money = #{currentPayMoney,jdbcType=DOUBLE},
+      userid = #{userid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

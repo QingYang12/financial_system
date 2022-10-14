@@ -1,0 +1,42 @@
+
+
+
+
+
+
+1.消费模块：分类进行管理，食物，着装，家具，行车，玩具等。
+        类别 type                    消费金额 money      发生时间   happen_time    账户ID userid
+        食物，着装，家具，行车，玩具
+        consumption
+2.统计模块：当日汇总，月份汇总，年份汇总   总余额显示
+        无表 现计算
+        三个汇总图  饼状图  / 消费  收入  债务  理财
+        查出 4种金额  分别和 相加变化量总额作比
+        analysis
+3.收入模块：收入记录，收入查询
+        收入类别 type          金额  money         发生时间 happen_time    账户ID userid
+        转账/工资 /奖金
+        income
+4.债务模块：房贷，车贷，其他债务等查询
+        类别type        名称name    债务金额money     发生日期happen_time    最后还款日期repayment_time        还款类别repayment_type       还款时长repayment_day_num       本期应还款金额current_pay_money   账户ID userid
+        房贷/车贷 等                                                                                    每月等息 /定息一次
+        debt
+5.理财模块：对理财信息进行管理操作
+    类别type       名称name       单日变化day_money     单日占比day_money_ratio    投入本金余额investment_money    账户ID userid   操作
+   基金/股票      基金公司
+   操作 买入 卖出多少 单价
+    investment
+6.个人余额资产表
+    账户ID userid    余额   money
+    person_money
+7.用户表
+
+
+
+
+
+
+
+
+
+
